@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Easter Campaign - Big Bus Tours</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/alpinejs" defer></script>
+    <style>
+        html, body {
+        padding: 0;
+        margin: 0;
+        height: 100%;
+        }
+
+        body {
+        background-image: linear-gradient(#FC5C7D, #6A82FB);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+    <!-- Header -->
+    <header class="w-full bg-[#800000] py-9 text-center">
+        <h1 class="text-4xl md:text-5xl font-bold text-yellow-400">How many eggs?</h1>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow flex items-center justify-center" x-data="{ open: false }">
+        <div class="bg-white border-4 border-[#800000] rounded-2xl p-6 max-w-2xl w-full text-center">
+        <button 
+            @click="open = true"
+            class="bg-yellow-400 text-[#800000] font-bold py-3 px-6 rounded-lg shadow-md hover:bg-yellow-300 transition"
+        >
+            Enter the Easter Competition
+        </button>
+
+        <!-- Modal -->
+        <div 
+            x-show="open"
+            x-transition
+            class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-60 z-50"
+            x-cloak
+        >
+            <div class="bg-white rounded-xl w-full max-w-2xl p-6 relative">
+            <button 
+                @click="open = false"
+                class="absolute top-2 right-2 text-gray-500 hover:text-black text-2xl"
+                aria-label="Close modal"
+            >
+                &times;
+            </button>
+            <iframe 
+                src="https://forms.zohopublic.eu/flourish1/form/FormTitle1/formperma/CeWeomwqsW666f8y4l0yWbgBw76Pq5orLXmsIPrNTeY" 
+                frameborder="0" 
+                style="width:100%; height:600px;" 
+                allow="geolocation"
+            ></iframe>
+            </div>
+        </div>
+        </div>
+    </main>
+</body>
+</html>
