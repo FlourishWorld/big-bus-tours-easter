@@ -36,7 +36,7 @@ export async function onRequest(context) {
   
     try {
         // Make the API request to MoEngage
-        const response = await fetch(`https://api-01.moengage.com/v1/customer?app_id=${appId}`, {
+        const response = await fetch(`https://api-02.moengage.com/v1/customer?app_id=${appId}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
