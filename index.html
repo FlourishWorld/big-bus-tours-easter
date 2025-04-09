@@ -6,6 +6,27 @@
         <title>Easter Campaign - Big Bus Tours</title>
         <script src="https://cdn.tailwindcss.com"></script>
         <script src="https://unpkg.com/alpinejs" defer></script>
+        <style>
+            @font-face {
+                font-family: 'DIN Round Pro';
+                src: url('fonts/DINRoundPro.woff2') format('woff2'),
+                    url('fonts/DINRoundPro.woff') format('woff');
+                font-weight: normal;
+                font-style: normal;
+            }
+
+            @font-face {
+                font-family: 'DIN Round Pro';
+                src: url('fonts/DINRoundPro-Bold.woff2') format('woff2'),
+                    url('fonts/DINRoundPro-Bold.woff') format('woff');
+                font-weight: bold;
+                font-style: normal;
+            }
+
+            body {
+                font-family: 'DIN Round Pro', Arial, sans-serif;
+            }
+        </style>
     </head>
     <body class="bg-[#AA0A2F] flex flex-col items-center justify-center text-white py-[32px]" x-data="{ open: false }">
         <h1 class="text-center text-[24px] md:text-[48px] leading-[1.2] font-bold py-[20px] w-full max-w-[84%]">
@@ -88,6 +109,7 @@
                         terms: false
                     },
                     answers: ['8 Eggs', '9 Eggs', '10 Eggs', '11 Eggs', '12 Eggs', '13 Eggs', '14 Eggs'],
+                    isFormSubmitted: false,
 
                     submitForm() {
                         if (!this.formData.terms) {
@@ -124,8 +146,7 @@
                             return response.text();
                         })
                         .then(data => {
-                            alert('Form submitted successfully!');
-                            console.log('Success:', data);
+                            this.isFormSubmitted = true;
                             this.formData = {
                                 first_name: '',
                                 last_name: '',
@@ -141,6 +162,7 @@
                         });
                     }
                 }">
+                    <!-- Close Modal Button -->
                     <button 
                         @click="open = false"
                         class="absolute top-2 right-[1rem] text-black text-2xl"
@@ -148,88 +170,100 @@
                     >
                         &times;
                     </button>
-                    <form @submit.prevent="submitForm">
-                        <div class="mb-4">
-                            <label for="first_name" class="block text-white text-sm mb-2">First Name:</label>
-                            <input type="text" id="first_name" x-model="formData.first_name" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
-                        </div>
-            
-                        <div class="mb-4">
-                            <label for="last_name" class="block text-white text-sm mb-2">Last Name:</label>
-                            <input type="text" id="last_name" x-model="formData.last_name" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
-                        </div>
-            
-                        <div class="mb-4">
-                            <label for="email" class="block text-white text-sm mb-2">Email Address:</label>
-                            <input type="email" id="email" x-model="formData.email" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
-                        </div>
-            
-                        <div class="mb-4">
-                            <div class="mb-4" x-data="{
-                                search: '',
-                                selected: '',
-                                showOptions: false,
-                                countries: ['Afghanistan', 'Albania', 'Algeria', 'Andorra', 'Angola', 'Antigua and Barbuda', 'Argentina', 'Armenia', 'Australia', 'Austria', 'Azerbaijan', 'Bahamas', 'Bahrain', 'Bangladesh', 'Barbados', 'Belarus', 'Belgium', 'Belize', 'Benin', 'Bhutan', 'Bolivia', 'Bosnia and Herzegovina', 'Botswana', 'Brazil', 'Brunei', 'Bulgaria', 'Burkina Faso', 'Burundi', 'Cabo Verde', 'Cambodia', 'Cameroon', 'Canada', 'Central African Republic', 'Chad', 'Chile', 'China', 'Colombia', 'Comoros', 'Congo', 'Costa Rica', 'Croatia', 'Cuba', 'Cyprus', 'Czech Republic', 'Democratic Republic of the Congo', 'Denmark', 'Djibouti', 'Dominica', 'Dominican Republic', 'Ecuador', 'Egypt', 'El Salvador', 'Equatorial Guinea', 'Eritrea', 'Estonia', 'Eswatini', 'Ethiopia', 'Fiji', 'Finland', 'France', 'Gabon', 'Gambia', 'Georgia', 'Germany', 'Ghana', 'Greece', 'Grenada', 'Guatemala', 'Guinea', 'Guinea-Bissau', 'Guyana', 'Haiti', 'Honduras', 'Hungary', 'Iceland', 'India', 'Indonesia', 'Iran', 'Iraq', 'Ireland', 'Israel', 'Italy', 'Jamaica', 'Japan', 'Jordan', 'Kazakhstan', 'Kenya', 'Kiribati', 'Kuwait', 'Kyrgyzstan', 'Laos', 'Latvia', 'Lebanon', 'Lesotho', 'Liberia', 'Libya', 'Liechtenstein', 'Lithuania', 'Luxembourg', 'Madagascar', 'Malawi', 'Malaysia', 'Maldives', 'Mali', 'Malta', 'Marshall Islands', 'Mauritania', 'Mauritius', 'Mexico', 'Micronesia', 'Moldova', 'Monaco', 'Mongolia', 'Montenegro', 'Morocco', 'Mozambique', 'Myanmar', 'Namibia', 'Nauru', 'Nepal', 'Netherlands', 'New Zealand', 'Nicaragua', 'Niger', 'Nigeria', 'North Korea', 'North Macedonia', 'Norway', 'Oman', 'Pakistan', 'Palau', 'Palestine', 'Panama', 'Papua New Guinea', 'Paraguay', 'Peru', 'Philippines', 'Poland', 'Portugal', 'Qatar', 'Romania', 'Russia', 'Rwanda', 'Saint Kitts and Nevis', 'Saint Lucia', 'Saint Vincent and the Grenadines', 'Samoa', 'San Marino', 'Sao Tome and Principe', 'Saudi Arabia', 'Senegal', 'Serbia', 'Seychelles', 'Sierra Leone', 'Singapore', 'Slovakia', 'Slovenia', 'Solomon Islands', 'Somalia', 'South Africa', 'South Korea', 'South Sudan', 'Spain', 'Sri Lanka', 'Sudan', 'Suriname', 'Sweden', 'Switzerland', 'Syria', 'Tajikistan', 'Tanzania', 'Thailand', 'Timor-Leste', 'Togo', 'Tonga', 'Trinidad and Tobago', 'Tunisia', 'Turkey', 'Turkmenistan', 'Tuvalu', 'Uganda', 'Ukraine', 'United Arab Emirates', 'United Kingdom', 'United States', 'Uruguay', 'Uzbekistan', 'Vanuatu', 'Vatican City', 'Venezuela', 'Vietnam', 'Yemen', 'Zambia', 'Zimbabwe'],
-                                filteredCountries() {
-                                    return this.countries.filter(c => c.toLowerCase().includes(this.search.toLowerCase()));
-                                },
-                                choose(country) {
-                                    this.selected = country;
-                                    this.search = country;
-                                    this.showOptions = false;
-                                    formData.country = country;
-                                }
-                            }">
-                                <label class="block text-white text-sm mb-2">Country:</label>
-                                <div class="relative">
-                                    <input 
-                                        type="text" 
-                                        x-model="search" 
-                                        @focus="showOptions = true" 
-                                        @click.away="showOptions = false"
-                                        @keydown.escape="showOptions = false"
-                                        class="shadow border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:shadow-outline placeholder-gray-700 leading-tight"
-                                        placeholder="Search or select a country"
-                                        required
-                                    >
-                                    <template x-if="showOptions">
-                                        <ul class="absolute z-10 w-full bg-white border mt-1 rounded max-h-60 overflow-y-auto text-gray-700">
-                                            <template x-for="country in filteredCountries()" :key="country">
-                                                <li 
-                                                    @click="choose(country)"
-                                                    class="px-4 py-2 hover:bg-gray-200 cursor-pointer"
-                                                    x-text="country"
-                                                ></li>
-                                            </template>
-                                        </ul>
-                                    </template>
+
+                    <div x-show="!isFormSubmitted">
+                        <form @submit.prevent="submitForm">
+                            <div class="mb-4">
+                                <label for="first_name" class="block text-white text-sm mb-2">First Name:</label>
+                                <input type="text" id="first_name" x-model="formData.first_name" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+                            </div>
+                
+                            <div class="mb-4">
+                                <label for="last_name" class="block text-white text-sm mb-2">Last Name:</label>
+                                <input type="text" id="last_name" x-model="formData.last_name" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+                            </div>
+                
+                            <div class="mb-4">
+                                <label for="email" class="block text-white text-sm mb-2">Email Address:</label>
+                                <input type="email" id="email" x-model="formData.email" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+                            </div>
+                
+                            <div class="mb-4">
+                                <div class="mb-4" x-data="{
+                                    search: '',
+                                    selected: '',
+                                    showOptions: false,
+                                    countries: ['Afghanistan', 'Albania', 'Algeria', 'Andorra', 'Angola', 'Antigua and Barbuda', 'Argentina', 'Armenia', 'Australia', 'Austria', 'Azerbaijan', 'Bahamas', 'Bahrain', 'Bangladesh', 'Barbados', 'Belarus', 'Belgium', 'Belize', 'Benin', 'Bhutan', 'Bolivia', 'Bosnia and Herzegovina', 'Botswana', 'Brazil', 'Brunei', 'Bulgaria', 'Burkina Faso', 'Burundi', 'Cabo Verde', 'Cambodia', 'Cameroon', 'Canada', 'Central African Republic', 'Chad', 'Chile', 'China', 'Colombia', 'Comoros', 'Congo', 'Costa Rica', 'Croatia', 'Cuba', 'Cyprus', 'Czech Republic', 'Democratic Republic of the Congo', 'Denmark', 'Djibouti', 'Dominica', 'Dominican Republic', 'Ecuador', 'Egypt', 'El Salvador', 'Equatorial Guinea', 'Eritrea', 'Estonia', 'Eswatini', 'Ethiopia', 'Fiji', 'Finland', 'France', 'Gabon', 'Gambia', 'Georgia', 'Germany', 'Ghana', 'Greece', 'Grenada', 'Guatemala', 'Guinea', 'Guinea-Bissau', 'Guyana', 'Haiti', 'Honduras', 'Hungary', 'Iceland', 'India', 'Indonesia', 'Iran', 'Iraq', 'Ireland', 'Israel', 'Italy', 'Jamaica', 'Japan', 'Jordan', 'Kazakhstan', 'Kenya', 'Kiribati', 'Kuwait', 'Kyrgyzstan', 'Laos', 'Latvia', 'Lebanon', 'Lesotho', 'Liberia', 'Libya', 'Liechtenstein', 'Lithuania', 'Luxembourg', 'Madagascar', 'Malawi', 'Malaysia', 'Maldives', 'Mali', 'Malta', 'Marshall Islands', 'Mauritania', 'Mauritius', 'Mexico', 'Micronesia', 'Moldova', 'Monaco', 'Mongolia', 'Montenegro', 'Morocco', 'Mozambique', 'Myanmar', 'Namibia', 'Nauru', 'Nepal', 'Netherlands', 'New Zealand', 'Nicaragua', 'Niger', 'Nigeria', 'North Korea', 'North Macedonia', 'Norway', 'Oman', 'Pakistan', 'Palau', 'Palestine', 'Panama', 'Papua New Guinea', 'Paraguay', 'Peru', 'Philippines', 'Poland', 'Portugal', 'Qatar', 'Romania', 'Russia', 'Rwanda', 'Saint Kitts and Nevis', 'Saint Lucia', 'Saint Vincent and the Grenadines', 'Samoa', 'San Marino', 'Sao Tome and Principe', 'Saudi Arabia', 'Senegal', 'Serbia', 'Seychelles', 'Sierra Leone', 'Singapore', 'Slovakia', 'Slovenia', 'Solomon Islands', 'Somalia', 'South Africa', 'South Korea', 'South Sudan', 'Spain', 'Sri Lanka', 'Sudan', 'Suriname', 'Sweden', 'Switzerland', 'Syria', 'Tajikistan', 'Tanzania', 'Thailand', 'Timor-Leste', 'Togo', 'Tonga', 'Trinidad and Tobago', 'Tunisia', 'Turkey', 'Turkmenistan', 'Tuvalu', 'Uganda', 'Ukraine', 'United Arab Emirates', 'United Kingdom', 'United States', 'Uruguay', 'Uzbekistan', 'Vanuatu', 'Vatican City', 'Venezuela', 'Vietnam', 'Yemen', 'Zambia', 'Zimbabwe'],
+                                    filteredCountries() {
+                                        return this.countries.filter(c => c.toLowerCase().includes(this.search.toLowerCase()));
+                                    },
+                                    choose(country) {
+                                        this.selected = country;
+                                        this.search = country;
+                                        this.showOptions = false;
+                                        formData.country = country;
+                                    }
+                                }">
+                                    <label class="block text-white text-sm mb-2">Country:</label>
+                                    <div class="relative">
+                                        <input 
+                                            type="text" 
+                                            x-model="search" 
+                                            @focus="showOptions = true" 
+                                            @click.away="showOptions = false"
+                                            @keydown.escape="showOptions = false"
+                                            class="shadow border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:shadow-outline placeholder-gray-700 leading-tight"
+                                            placeholder="Search or select a country"
+                                            required
+                                        >
+                                        <template x-if="showOptions">
+                                            <ul class="absolute z-10 w-full bg-white border mt-1 rounded max-h-60 overflow-y-auto text-gray-700">
+                                                <template x-for="country in filteredCountries()" :key="country">
+                                                    <li 
+                                                        @click="choose(country)"
+                                                        class="px-4 py-2 hover:bg-gray-200 cursor-pointer"
+                                                        x-text="country"
+                                                    ></li>
+                                                </template>
+                                            </ul>
+                                        </template>
+                                    </div>
                                 </div>
                             </div>
+                
+                            <div class="mb-4">
+                                <label for="answer" class="block text-white text-sm mb-2">Answer:</label>
+                                <select id="answer" x-model="formData.answer" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                                    <option value="" disabled selected>Select an answer</option>
+                                    <template x-for="ans in answers" :key="ans">
+                                        <option :value="ans" x-text="ans"></option>
+                                    </template>
+                                </select>
+                            </div>
+                
+                            <div class="mb-4">
+                                <label class="inline-flex items-center">
+                                    <input type="checkbox" x-model="formData.terms" class="form-checkbox h-5 w-5 text-[#FFDD00]">
+                                    <span class="ml-2 text-white text-sm">I agree to the <a href="https://www.bigbustours.com/competition-terms-and-conditions" class="text-[#FFDD00]">terms and conditions</a></span>
+                                </label>
+                            </div>
+                
+                            <div class="flex items-center justify-end">
+                                <button type="submit" class="bg-white text-[#AA0A2F] font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline hover:bg-[#FFDD00] transition">
+                                    Submit
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Success Box (appears after form submission) -->
+                    <div x-show="isFormSubmitted" x-transition>
+                        <div class="text-center">
+                            <h2 class="font-bold text-[44px]">Well done!</h2>
+                            <p class="text-[20px] my-[20px]">If you found all the Easter Eggs you'll be in the running for free Big Bus Tour tickets!</p>
+                            <p class="text-[20px]">We'll let you know if you win. In the meantime, check out the latest Big Bus Tour offers available right now. </p>
                         </div>
-            
-                        <div class="mb-4">
-                            <label for="answer" class="block text-white text-sm mb-2">Answer:</label>
-                            <select id="answer" x-model="formData.answer" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                                <option value="" disabled selected>Select an answer</option>
-                                <template x-for="ans in answers" :key="ans">
-                                    <option :value="ans" x-text="ans"></option>
-                                </template>
-                            </select>
-                        </div>
-            
-                        <div class="mb-4">
-                            <label class="inline-flex items-center">
-                                <input type="checkbox" x-model="formData.terms" class="form-checkbox h-5 w-5 text-[#FFDD00]">
-                                <span class="ml-2 text-white text-sm">I agree to the <a href="https://www.bigbustours.com/competition-terms-and-conditions" class="text-[#FFDD00]">terms and conditions</a></span>
-                            </label>
-                        </div>
-            
-                        <div class="flex items-center justify-end">
-                            <button type="submit" class="bg-white text-[#AA0A2F] font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline hover:bg-[#FFDD00] transition">
-                                Submit
-                            </button>
-                        </div>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>
