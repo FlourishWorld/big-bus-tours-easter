@@ -1,10 +1,10 @@
-export async function onRequest(context) {
-    console.log('blah blah');
-    return new Response("Helloooooo!")
-    // Access your secret environment variables from Cloudflare
+// export async function onRequest(context) {
+export function onRequest(context) {
+    const appId = context.env.MOENGAGE_APP_ID;
     const username = context.env.MOENGAGE_USERNAME;
     const password = context.env.MOENGAGE_PASSWORD;
-    const appId = context.env.MOENGAGE_APP_ID;
+
+    console.log(username);
   
     // Ensure these values are present
     if (!username || !password || !appId) {
@@ -12,7 +12,8 @@ export async function onRequest(context) {
     }
   
     // Parse the incoming request (form data)
-    const { first_name, last_name, email, country, answer } = await context.request.json();
+    const { first_name, last_name, email, country, answer } = context.request.json();
+    // const { first_name, last_name, email, country, answer } = await context.request.json();
   
     // Ensure form data is valid
     if (!first_name || !last_name || !email || !country || !answer) {
@@ -38,7 +39,8 @@ export async function onRequest(context) {
   
     try {
       // Make the API request to MoEngage
-      const response = await fetch(`https://api-01.moengage.com/v1/customer?app_id=${appId}`, {
+      const response = fetch(`https://api-01.moengage.com/v1/customer?app_id=${appId}`, {
+    //   const response = await fetch(`https://api-01.moengage.com/v1/customer?app_id=${appId}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -49,7 +51,8 @@ export async function onRequest(context) {
   
       // Check if the response is successful
       if (!response.ok) {
-        const errorMessage = await response.text();
+        // const errorMessage = await response.text();
+        const errorMessage = response.text();
         return new Response(`Error: ${errorMessage}`, { status: response.status });
       }
   
