@@ -98,7 +98,7 @@
             class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-60 z-50 p-[16px] md:p-[40px]"
             x-cloak
         >
-            <div class="w-full max-w-2xl flex justify-center">
+            <div class="w-full max-w-2xl flex justify-center" x-cloak>
                 <div
                     :class="{
                         'bg-[#AA0A2F] rounded shadow-md w-full relative': true,
@@ -168,6 +168,7 @@
                             });
                         }
                     }"
+                    x-cloak
                 >
                     <!-- Close Modal Button -->
                     <button 
@@ -178,7 +179,7 @@
                         &times;
                     </button>
 
-                    <div x-show="!isFormSubmitted">
+                    <div x-show="!isFormSubmitted" x-cloak>
                         <form @submit.prevent="submitForm">
                             <div class="mb-4">
                                 <label for="first_name" class="block text-white text-sm mb-2">First Name:</label>
@@ -264,7 +265,7 @@
                     </div>
 
                     <!-- Success Box (appears after form submission) -->
-                    <div x-show="isFormSubmitted" x-transition>
+                    <div x-show="isFormSubmitted" x-transition x-cloak>
                         <div class="text-center pb-[20px] pt-[8px] px-[4px] md:px-[60px]">
                             <h2 class="font-bold text-[24px] sm:text-[32px] md:text-[44px]">Well done!</h2>
                             <p class="text-[14px] sm:text-[18px] md:text-[24px] my-[20px]">If you found all the Easter Eggs you'll be in the running for free Big Bus Tour tickets!</p>
