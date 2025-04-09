@@ -6,16 +6,9 @@
         <title>Easter Campaign - Big Bus Tours</title>
         <script src="https://cdn.tailwindcss.com"></script>
         <script src="https://unpkg.com/alpinejs" defer></script>
-        <style>
-            html, body {
-                padding: 0;
-                margin: 0;
-                height: 100%;
-            }
-        </style>
     </head>
-    <body class="bg-[#AA0A2F] min-h-screen flex flex-col items-center justify-center text-white" x-data="{ open: false }">
-        <h1 class="text-center text-[24px] md:text-[48px] leading-[1.2] font-bold py-[20px] px-[20px] md:px-[40px] xl:px-[200px]">
+    <body class="bg-[#AA0A2F] flex flex-col items-center justify-center text-white py-[32px]" x-data="{ open: false }">
+        <h1 class="text-center text-[24px] md:text-[48px] leading-[1.2] font-bold py-[20px] w-full max-w-[84%]">
             Find all the Easter Eggs for a chance to win Big Bus Tour tickets!
         </h1>
         <button 
@@ -27,7 +20,7 @@
 
         <!-- Zoomable SVG Wrapper -->
         <div 
-            class="relative w-full max-w-[90vw] aspect-[3/4] overflow-hidden mx-auto my-8 rounded"
+            class="relative w-full max-w-[84%] overflow-hidden mx-auto my-8"
             x-data="{
                 zoom: 1,
                 x: 0,
@@ -64,16 +57,15 @@
             @mouseup="endPan"
             @mouseleave="endPan"
         >
-
-        <!-- The SVG content -->
+            <!-- The SVG content -->
             <div 
-                class="absolute inset-0 cursor-grab active:cursor-grabbing"
+                class="w-full cursor-grab active:cursor-grabbing"
                 :style="`transform: scale(${zoom}) translate(${x}px, ${y}px); transform-origin: center center; transition: transform 0.1s ease-out;`"
             >
                 <img 
                     src="BIGBUS-EASTER.svg" 
                     alt="Zoomable SVG" 
-                    class="w-full h-full object-contain pointer-events-none"
+                    class="w-full h-auto pointer-events-none"
                 />
             </div>
         </div>
