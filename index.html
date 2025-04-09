@@ -116,15 +116,12 @@
                             body: JSON.stringify(userData)
                         })
                         .then(response => {
-                            console.error('HERE');
-                            if (!response.ok) {
-                                return response.text().then(text => { throw new Error(`HTTP error! status: ${response.status}, body: ${text}`) });
+                           if (!response.ok) {
+                                return response.text().then(text => { 
+                                    throw new Error(`HTTP error! status: ${response.status}, body: ${text}`) 
+                                });
                             }
-                            console.error('HEREE');
-                            console.error(response);
-                            console.error(response.text());
-                            console.error(response.json());
-                            return response.json();
+                            return response.text();
                         })
                         .then(data => {
                             alert('Form submitted successfully!');
