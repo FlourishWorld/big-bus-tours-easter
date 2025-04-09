@@ -57,8 +57,7 @@ export async function onRequest(context) {
         //     result = await response.text();
         // }
 
-        console.log('Response:', response.json());
-        console.log('Response:', response.text());
+        console.log('Response:', response);
     
         // Check if the response is successful
         // if (!response.ok) {
