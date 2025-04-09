@@ -41,21 +41,21 @@
                         terms: false
                     },
                     answers: ['5 Eggs', '7 Eggs', '9 Eggs', '11 Eggs', '13 Eggs'],
+
+                    // DELETE THESE BEFORE DEPLOYING
+                    // const app_id = 'J66N00EIXFL3G0NFKB306NIH';
+                    // const username = '';
+                    // const password = 'nRQd0SxyhFnYlU5gdKOvC1M5';
+
                     submitForm() {
                         if (!this.formData.terms) {
                             alert('Please accept the terms and conditions.');
                             return;
                         }
 
-                        const app_id = process.env.MOENGAGE_APP_ID;
-                        const username = process.env.MOENGAGE_USERNAME;
-                        const password = process.env.MOENGAGE_PASSWORD;
-
-                        const base64Credentials = btoa(`${username}:${password}`);
-                        const apiUrl = 'https://api-01.moengage.com/v1/customer?app_id=' + app_id;
                         const userData = {
                             type: 'customer',
-                            customer_id: this.formData.email, // Using email as customer_id
+                            customer_id: this.formData.email,
                             update_existing_only: 'false',
                             attributes: {
                                 first_name: this.formData.first_name,
@@ -65,12 +65,11 @@
                                 answer: this.formData.answer
                             }
                         };
-            
-                        fetch(apiUrl, {
+
+                        fetch('/api/send', {
                             method: 'POST',
                             headers: {
-                                'Content-Type': 'application/json',
-                                'Authorization': `Basic ${base64Credentials}`
+                                'Content-Type': 'application/json'
                             },
                             body: JSON.stringify(userData)
                         })
