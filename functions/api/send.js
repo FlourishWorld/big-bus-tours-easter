@@ -1,5 +1,4 @@
-// export async function onRequest(context) {
-export function onRequest(context) {
+export async function onRequest(context) {
     const appId = context.env.MOENGAGE_APP_ID;
     const username = context.env.MOENGAGE_USERNAME;
     const password = context.env.MOENGAGE_PASSWORD;
@@ -12,10 +11,8 @@ export function onRequest(context) {
     }
   
     // Parse the incoming request (form data)
-    const requestBody = context.request.json();
+    const requestBody = await context.request.json();
     console.log("Received Request Body:", requestBody);
-    // const { first_name, last_name, email, country, answer } = await context.request.json();
-  
     const { first_name, last_name, email, country, answer } = requestBody;
 
     // Ensure form data is valid
@@ -42,8 +39,7 @@ export function onRequest(context) {
   
     try {
       // Make the API request to MoEngage
-      const response = fetch(`https://api-01.moengage.com/v1/customer?app_id=${appId}`, {
-    //   const response = await fetch(`https://api-01.moengage.com/v1/customer?app_id=${appId}`, {
+      const response = await fetch(`https://api-01.moengage.com/v1/customer?app_id=${appId}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -54,8 +50,7 @@ export function onRequest(context) {
   
       // Check if the response is successful
       if (!response.ok) {
-        // const errorMessage = await response.text();
-        const errorMessage = response.text();
+        const errorMessage = await response.text();
         return new Response(`Error: ${errorMessage}`, { status: response.status });
       }
   
