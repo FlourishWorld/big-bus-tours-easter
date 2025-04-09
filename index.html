@@ -15,15 +15,71 @@
         </style>
     </head>
     <body class="bg-[#AA0A2F] min-h-screen flex flex-col items-center justify-center text-white" x-data="{ open: false }">
-        <h1 class="text-center text-[24px] md:text-[55px] font-bold py-[20px] md:py-[40px] px-[40px] xl:px-[200px]">
+        <h1 class="text-center text-[24px] md:text-[48px] leading-[1.2] font-bold py-[20px] px-[20px] md:px-[40px] xl:px-[200px]">
             Find all the Easter Eggs for a chance to win Big Bus Tour tickets!
         </h1>
         <button 
             @click="open = true"
             class="bg-white text-[#AA0A2F] font-bold py-2 px-4 md:py-3 md:px-6 rounded-lg shadow-md hover:bg-[#FFDD00] transition"
         >
-            ENTER COMPETITION
+            ENTER GIVEAWAY
         </button>
+
+        <!-- Zoomable SVG Wrapper -->
+        <div 
+            class="relative w-full max-w-[90vw] aspect-[3/4] overflow-hidden mx-auto my-8 rounded"
+            x-data="{
+                zoom: 1,
+                x: 0,
+                y: 0,
+                isPanning: false,
+                startX: 0,
+                startY: 0,
+
+                onWheel(e) {
+                    const step = 0.1;
+                    const dir = e.deltaY > 0 ? -1 : 1;
+                    this.zoom = Math.min(4, Math.max(1, this.zoom + dir * step));
+                },
+
+                startPan(e) {
+                    this.isPanning = true;
+                    this.startX = e.clientX - this.x;
+                    this.startY = e.clientY - this.y;
+                },
+
+                doPan(e) {
+                    if (!this.isPanning) return;
+                    this.x = e.clientX - this.startX;
+                    this.y = e.clientY - this.startY;
+                },
+
+                endPan() {
+                    this.isPanning = false;
+                }
+            }"
+            @wheel.prevent="onWheel($event)"
+            @mousedown="startPan($event)"
+            @mousemove="doPan($event)"
+            @mouseup="endPan"
+            @mouseleave="endPan"
+        >
+
+        <!-- The SVG content -->
+            <div 
+                class="absolute inset-0 cursor-grab active:cursor-grabbing"
+                :style="`transform: scale(${zoom}) translate(${x}px, ${y}px); transform-origin: center center; transition: transform 0.1s ease-out;`"
+            >
+                <img 
+                    src="BIGBUS-EASTER.svg" 
+                    alt="Zoomable SVG" 
+                    class="w-full h-full object-contain pointer-events-none"
+                />
+            </div>
+        </div>
+
+
+        <!-- Form -->
         <div 
             x-show="open"
             x-transition
@@ -41,11 +97,6 @@
                         terms: false
                     },
                     answers: ['5 Eggs', '7 Eggs', '9 Eggs', '11 Eggs', '13 Eggs'],
-
-                    // DELETE THESE BEFORE DEPLOYING
-                    // const app_id = 'J66N00EIXFL3G0NFKB306NIH';
-                    // const username = '';
-                    // const password = 'nRQd0SxyhFnYlU5gdKOvC1M5';
 
                     submitForm() {
                         if (!this.formData.terms) {
@@ -65,8 +116,6 @@
                                 answer: this.formData.answer
                             }
                         };
-
-                        console.log('Sending data to Cloudflare function:', userData);
 
                         fetch('/api/send', {
                             method: 'POST',
@@ -178,7 +227,7 @@
                         <div class="mb-4">
                             <label class="inline-flex items-center">
                                 <input type="checkbox" x-model="formData.terms" class="form-checkbox h-5 w-5 text-[#FFDD00]">
-                                <span class="ml-2 text-white text-sm">I agree to the <a href="#" class="text-[#FFDD00]">terms and conditions</a></span>
+                                <span class="ml-2 text-white text-sm">I agree to the <a href="https://www.bigbustours.com/competition-terms-and-conditions" class="text-[#FFDD00]">terms and conditions</a></span>
                             </label>
                         </div>
             
