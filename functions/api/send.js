@@ -12,8 +12,8 @@ export async function onRequest(context) {
   
     // Parse the incoming request (form data)
     const requestBody = await context.request.json();
-    console.log("Received Request Body:", requestBody);
-    const { first_name, last_name, email, country, answer } = requestBody;
+    const { attributes } = requestBody;
+    const { first_name, last_name, email, country, answer } = attributes;
 
     // Ensure form data is valid
     if (!first_name || !last_name || !email || !country || !answer) {
