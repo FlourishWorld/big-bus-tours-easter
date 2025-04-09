@@ -56,15 +56,15 @@ export async function onRequest(context) {
         // } else {
         //     result = await response.text();
         // }
-
-        console.log('Response:', response);
     
         // Check if the response is successful
-        // if (!response.ok) {
-        //     const errorMessage = await response.text();
-        //     return new Response(`Erroooor: ${errorMessage}`, { status: response.status });
-        // }
+        if (!response.ok) {
+            console.log('NOT OK');
+            const errorMessage = await response.text();
+            return new Response(`Erroooor: ${errorMessage}`, { status: response.status });
+        }
   
+        console.log('IS OK');
         // If successful, return a success message
         return new Response("Form data successfully sent to MoEngage!", { status: 200 });
   
