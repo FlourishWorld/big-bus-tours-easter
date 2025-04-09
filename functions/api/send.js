@@ -48,22 +48,23 @@ export async function onRequest(context) {
             body: JSON.stringify(userData)
         });
 
-        const contentType = response.headers.get('content-type');
+        // const contentType = response.headers.get('content-type');
 
-        let result;
-        if (contentType && contentType.includes('application/json')) {
-            result = await response.json();
-        } else {
-            result = await response.text();
-        }
+        // let result;
+        // if (contentType && contentType.includes('application/json')) {
+        //     result = await response.json();
+        // } else {
+        //     result = await response.text();
+        // }
 
-        console.log('Response:', result);
+        console.log('Response:', response.json());
+        console.log('Response:', response.text());
     
         // Check if the response is successful
-        if (!response.ok) {
-            const errorMessage = await response.text();
-            return new Response(`Erroooor: ${errorMessage}`, { status: response.status });
-        }
+        // if (!response.ok) {
+        //     const errorMessage = await response.text();
+        //     return new Response(`Erroooor: ${errorMessage}`, { status: response.status });
+        // }
   
         // If successful, return a success message
         return new Response("Form data successfully sent to MoEngage!", { status: 200 });
