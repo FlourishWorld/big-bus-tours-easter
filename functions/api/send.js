@@ -2,6 +2,9 @@ export async function onRequest(context) {
     const appId = context.env.MOENGAGE_APP_ID;
     const username = context.env.MOENGAGE_USERNAME;
     const password = context.env.MOENGAGE_PASSWORD;
+    // const appId = 'J66N00EIXFL3G0NFKB306NIH';
+    // const username = 'J66N00EIXFL3G0NFKB306NIH';
+    // const password = 'nRQd0SxyhFnYlU5gdKOvC1M5';
   
     // Ensure these values are present
     if (!username || !password || !appId) {
@@ -44,6 +47,17 @@ export async function onRequest(context) {
             },
             body: JSON.stringify(userData)
         });
+
+        const contentType = response.headers.get('content-type');
+
+        let result;
+        if (contentType && contentType.includes('application/json')) {
+            result = await response.json();
+        } else {
+            result = await response.text();
+        }
+
+        console.log('Response:', result);
     
         // Check if the response is successful
         if (!response.ok) {
