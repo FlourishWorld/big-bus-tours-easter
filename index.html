@@ -95,77 +95,84 @@
         <div 
             x-show="open"
             x-transition
-            class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-60 z-50 p-[40px]"
+            class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-60 z-50 p-[16px] md:p-[40px]"
             x-cloak
         >
             <div class="w-full max-w-2xl flex justify-center">
-                <div class="bg-[#AA0A2F] p-8 rounded shadow-md w-full max-w-md relative" x-data="{
-                    formData: {
-                        first_name: '',
-                        last_name: '',
-                        email: '',
-                        country: '',
-                        answer: '',
-                        terms: false
-                    },
-                    answers: ['8 Eggs', '9 Eggs', '10 Eggs', '11 Eggs', '12 Eggs', '13 Eggs', '14 Eggs'],
-                    isFormSubmitted: false,
+                <div
+                    :class="{
+                        'bg-[#AA0A2F] rounded shadow-md w-full relative': true,
+                        'max-w-md p-8': !isFormSubmitted, 
+                        'max-w-3xl md:max-w-3xl p-2 md:p-8': isFormSubmitted
+                    }" 
+                    x-data="{
+                        formData: {
+                            first_name: '',
+                            last_name: '',
+                            email: '',
+                            country: '',
+                            answer: '',
+                            terms: false
+                        },
+                        answers: ['8 Eggs', '9 Eggs', '10 Eggs', '11 Eggs', '12 Eggs', '13 Eggs', '14 Eggs'],
+                        isFormSubmitted: false,
 
-                    submitForm() {
-                        if (!this.formData.terms) {
-                            alert('Please accept the terms and conditions.');
-                            return;
-                        }
-
-                        const userData = {
-                            type: 'customer',
-                            customer_id: this.formData.email,
-                            update_existing_only: 'false',
-                            attributes: {
-                                first_name: this.formData.first_name,
-                                last_name: this.formData.last_name,
-                                email: this.formData.email,
-                                country: this.formData.country,
-                                answer: this.formData.answer
+                        submitForm() {
+                            if (!this.formData.terms) {
+                                alert('Please accept the terms and conditions.');
+                                return;
                             }
-                        };
 
-                        fetch('/api/send', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json'
-                            },
-                            body: JSON.stringify(userData)
-                        })
-                        .then(response => {
-                           if (!response.ok) {
-                                return response.text().then(text => { 
-                                    throw new Error(`HTTP error! status: ${response.status}, body: ${text}`) 
-                                });
-                            }
-                            return response.text();
-                        })
-                        .then(data => {
-                            this.isFormSubmitted = true;
-                            this.formData = {
-                                first_name: '',
-                                last_name: '',
-                                email: '',
-                                country: '',
-                                answer: '',
-                                terms: false
+                            const userData = {
+                                type: 'customer',
+                                customer_id: this.formData.email,
+                                update_existing_only: 'false',
+                                attributes: {
+                                    first_name: this.formData.first_name,
+                                    last_name: this.formData.last_name,
+                                    email: this.formData.email,
+                                    country: this.formData.country,
+                                    answer: this.formData.answer
+                                }
                             };
-                        })
-                        .catch((error) => {
-                            alert('Error submitting foooooorm.');
-                            console.error('Errrrrrrrrrrrrrrror:', error);
-                        });
-                    }
-                }">
+
+                            fetch('/api/send', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify(userData)
+                            })
+                            .then(response => {
+                            if (!response.ok) {
+                                    return response.text().then(text => { 
+                                        throw new Error(`HTTP error! status: ${response.status}, body: ${text}`) 
+                                    });
+                                }
+                                return response.text();
+                            })
+                            .then(data => {
+                                this.isFormSubmitted = true;
+                                this.formData = {
+                                    first_name: '',
+                                    last_name: '',
+                                    email: '',
+                                    country: '',
+                                    answer: '',
+                                    terms: false
+                                };
+                            })
+                            .catch((error) => {
+                                alert('Error submitting foooooorm.');
+                                console.error('Errrrrrrrrrrrrrrror:', error);
+                            });
+                        }
+                    }"
+                >
                     <!-- Close Modal Button -->
                     <button 
                         @click="open = false"
-                        class="absolute top-2 right-[1rem] text-black text-2xl"
+                        class="absolute top-0 right-[1rem] text-black text-4xl"
                         aria-label="Close modal"
                     >
                         &times;
@@ -258,10 +265,10 @@
 
                     <!-- Success Box (appears after form submission) -->
                     <div x-show="isFormSubmitted" x-transition>
-                        <div class="text-center">
-                            <h2 class="font-bold text-[44px]">Well done!</h2>
-                            <p class="text-[20px] my-[20px]">If you found all the Easter Eggs you'll be in the running for free Big Bus Tour tickets!</p>
-                            <p class="text-[20px]">We'll let you know if you win. In the meantime, check out the latest Big Bus Tour offers available right now. </p>
+                        <div class="text-center pb-[20px] pt-[8px] px-[4px] md:px-[60px]">
+                            <h2 class="font-bold text-[24px] sm:text-[32px] md:text-[44px]">Well done!</h2>
+                            <p class="text-[14px] sm:text-[18px] md:text-[24px] my-[20px]">If you found all the Easter Eggs you'll be in the running for free Big Bus Tour tickets!</p>
+                            <p class="text-[14px] sm:text-[18px] md:text-[24px]">We'll let you know if you win. In the meantime, check out the latest Big Bus Tour offers available right now. </p>
                         </div>
                     </div>
                 </div>
