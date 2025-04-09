@@ -66,6 +66,8 @@
                             }
                         };
 
+                        console.log('Sending data to Cloudflare function:', userData);
+
                         fetch('/api/send', {
                             method: 'POST',
                             headers: {

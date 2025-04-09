@@ -12,9 +12,12 @@ export function onRequest(context) {
     }
   
     // Parse the incoming request (form data)
-    const { first_name, last_name, email, country, answer } = context.request.json();
+    const requestBody = context.request.json();
+    console.log("Received Request Body:", requestBody);
     // const { first_name, last_name, email, country, answer } = await context.request.json();
   
+    const { first_name, last_name, email, country, answer } = requestBody;
+
     // Ensure form data is valid
     if (!first_name || !last_name || !email || !country || !answer) {
       return new Response("Missing required form fields", { status: 400 });
