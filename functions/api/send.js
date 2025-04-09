@@ -48,12 +48,12 @@ export async function onRequest(context) {
         // Check if the response is successful
         if (!response.ok) {
             console.log(response);
-            // const errorMessage = await response.text();
-            // return new Response(`Error: ${errorMessage}`, { status: response.status });
+            const errorMessage = await response.text();
+            return new Response(`Error: ${errorMessage}`, { status: response.status });
         }
   
         // If successful, return a success message
-        // return new Response("Form data successfully sent to MoEngage!", { status: 200 });
+        return new Response("Form data successfully sent to MoEngage!", { status: 200 });
   
     } catch (error) {
         console.error("Error during MoEngage API request:", error);
