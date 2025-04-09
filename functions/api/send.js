@@ -48,23 +48,12 @@ export async function onRequest(context) {
             body: JSON.stringify(userData)
         });
 
-        // const contentType = response.headers.get('content-type');
-
-        // let result;
-        // if (contentType && contentType.includes('application/json')) {
-        //     result = await response.json();
-        // } else {
-        //     result = await response.text();
-        // }
-    
         // Check if the response is successful
         if (!response.ok) {
-            console.log('NOT OK');
             const errorMessage = await response.text();
             return new Response(`Erroooor: ${errorMessage}`, { status: response.status });
         }
   
-        console.log('IS OK');
         // If successful, return a success message
         return new Response("Form data successfully sent to MoEngage!", { status: 200 });
   
