@@ -4,23 +4,26 @@ export async function onRequest(context) {
     const password = context.env.MOENGAGE_PASSWORD;
     const turnstileSecret = context.env.TURNSTILE_SECRET;
   
+
+    const body = await context.request.formData();
+    const turnstileToken = body.get("cf-turnstile-response");
+    console.log(turnstileToken);
+
     // Ensure these values are present
     if (!username || !password || !appId || !turnstileSecret) {
         return new Response("Missing credentials", { status: 400 });
     }
   
-    console.log(context.request);
     // Parse the incoming request (form data)
-    const requestBody = await context.request.json();
-    const { first_name, last_name, email, country, answer, terms, turnstileToken } = requestBody;
+    // const requestBody = await context.request.json();
+    // const { first_name, last_name, email, country, answer, terms, turnstileToken } = requestBody;
 
-    console.log(requestBody);
-    console.log(first_name);
-    console.log(turnstileToken);
+    // console.log(requestBody);
+    // console.log(first_name);
+    // console.log(turnstileToken);
 
     // Ensure form data is valid
     if (!first_name || !last_name || !email || !country || !answer || !turnstileToken) {
-        console.log('Missing field');
         return new Response("Missing required form fields", { status: 400 });
     }
 
