@@ -103,12 +103,14 @@
                             country: '',
                             answer: '',
                             terms: false,
-                            turnstileToken: $store.turnstile.token
+                            turnstileToken: ''
                         },
                         answers: ['8 Eggs', '9 Eggs', '10 Eggs', '11 Eggs', '12 Eggs', '13 Eggs', '14 Eggs'],
                         isFormSubmitted: false,
 
                         submitForm() {
+                            this.formData.turnstileToken = Alpine.store('turnstile').token;
+                            
                             console.log('Token before submit:', this.formData.turnstileToken);
 
                             if (!this.formData.terms) {
