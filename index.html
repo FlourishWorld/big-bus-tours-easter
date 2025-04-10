@@ -23,9 +23,11 @@
                 };
         
                 if (window.Alpine && window.Alpine.initialized) {
+                    console.log('ALPINE IS ALREADY INITIALISED');
                     // Alpine is already initialized, execute immediately
                     updateFormData();
                 } else {
+                    console.log('LISTENING FOR ALPINE INIT');
                     // Alpine is not yet initialized, listen for the event
                     document.addEventListener('alpine:init', updateFormData);
                 }
