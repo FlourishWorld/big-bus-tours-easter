@@ -4,6 +4,7 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Easter Campaign - Big Bus Tours</title>
+        <link rel="icon" type="image/png" href="BBT-favicon.png">
         <script src="https://cdn.tailwindcss.com"></script>
         <script src="https://unpkg.com/alpinejs" defer></script>
         <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
@@ -54,9 +55,17 @@
     -->
 
     <body class="bg-[#AA0A2F] flex flex-col items-center justify-center text-white py-[32px]" x-data="{ open: false }">
+        <img 
+            src="BB_Logo_Tours_YELLOW.png" 
+            alt="Big Bus Tours" 
+            class="min-w-[100px] w-[16%] h-auto my-[8px]"
+        />
         <h1 class="text-center text-[24px] md:text-[48px] leading-[1.2] font-bold py-[20px] w-full max-w-[84%]">
             Find all the Easter Eggs for a chance to win Big Bus Tour tickets!
         </h1>
+        <h2 class="text-center text-[16px] md:text-[32px] leading-[1.2] font-bold w-full max-w-[68%] pb-[28px]">
+            Explore the scene below, count all the eggs you can see, then hit 'Enter giveaway'.
+        </h2>
         <button 
             @click="open = true"
             class="bg-white text-[#AA0A2F] font-bold py-2 px-4 md:py-3 md:px-6 rounded-lg shadow-md hover:bg-[#FFDD00] transition"
@@ -64,57 +73,12 @@
             ENTER GIVEAWAY
         </button>
 
-        <!-- Zoomable SVG Wrapper -->
-        <div 
-            class="relative w-full max-w-[84%] overflow-hidden mx-auto my-8"
-            x-data="{
-                zoom: 1,
-                x: 0,
-                y: 0,
-                isPanning: false,
-                startX: 0,
-                startY: 0,
-
-                onWheel(e) {
-                    const step = 0.1;
-                    const dir = e.deltaY > 0 ? -1 : 1;
-                    this.zoom = Math.min(4, Math.max(1, this.zoom + dir * step));
-                },
-
-                startPan(e) {
-                    this.isPanning = true;
-                    this.startX = e.clientX - this.x;
-                    this.startY = e.clientY - this.y;
-                },
-
-                doPan(e) {
-                    if (!this.isPanning) return;
-                    this.x = e.clientX - this.startX;
-                    this.y = e.clientY - this.startY;
-                },
-
-                endPan() {
-                    this.isPanning = false;
-                }
-            }"
-            @wheel.prevent="onWheel($event)"
-            @mousedown="startPan($event)"
-            @mousemove="doPan($event)"
-            @mouseup="endPan"
-            @mouseleave="endPan"
-        >
-            <!-- The SVG content -->
-            <div 
-                class="w-full cursor-grab active:cursor-grabbing"
-                :style="`transform: scale(${zoom}) translate(${x}px, ${y}px); transform-origin: center center; transition: transform 0.1s ease-out;`"
-            >
-                <img 
-                    src="BIGBUS-EASTER.svg" 
-                    alt="Zoomable SVG" 
-                    class="w-full h-auto pointer-events-none"
-                />
-            </div>
-        </div>
+        <!-- The SVG -->
+        <img 
+            src="BIGBUS-EASTER.svg" 
+            alt="Zoomable SVG" 
+            class="w-full max-w-[84%] overflow-hidden mx-auto my-8"
+        />
 
         <!-- Form -->
         <div 
