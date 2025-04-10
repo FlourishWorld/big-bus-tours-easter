@@ -12,9 +12,9 @@ export async function onRequest(context) {
   
     // Parse the incoming request (form data)
     const requestBody = await context.request.json();
-    console.log(requestBody);
+    console.log(requestBody['cf-turnstile-response']);
     const { first_name, last_name, email, country, answer } = requestBody.attributes;
-    const turnstileToken = requestBody.get("cf-turnstile-response");
+    const turnstileToken = requestBody['cf-turnstile-response'];
 
     // Ensure form data is valid
     if (!first_name || !last_name || !email || !country || !answer || !turnstileToken) {
