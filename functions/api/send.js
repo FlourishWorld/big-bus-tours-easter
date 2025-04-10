@@ -6,15 +6,27 @@ export async function onRequest(context) {
   
     // Ensure these values are present
     if (!username || !password || !appId || !turnstileSecret) {
-        console.log('Missing credentials');
         return new Response("Missing credentials", { status: 400 });
     }
   
     // Parse the incoming request (form data)
-    const requestBody = await context.request.json();
-    console.log(requestBody['cf-turnstile-response']);
-    const { first_name, last_name, email, country, answer } = requestBody.attributes;
-    const turnstileToken = requestBody['cf-turnstile-response'];
+    // const requestBody = await context.request.json();
+    // console.log(requestBody['cf-turnstile-response']);
+    // const { first_name, last_name, email, country, answer } = requestBody.attributes;
+    // const turnstileToken = requestBody['cf-turnstile-response'];
+
+    const body = await context.request.formData();
+
+    const first_name = body.get('first_name');
+    const last_name = body.get('attributes[last_name]');
+    const email = body.get('email');
+    const country = body.get('country');
+    const answer = body.get('answer');
+    const token = body.get("cf-turnstile-response");
+
+    console.log(token);
+    console.log(first_name);
+    console.log(last_name);
 
     // Ensure form data is valid
     if (!first_name || !last_name || !email || !country || !answer || !turnstileToken) {
