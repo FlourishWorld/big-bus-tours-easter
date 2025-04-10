@@ -2,24 +2,47 @@ export async function onRequest(context) {
     const appId = context.env.MOENGAGE_APP_ID;
     const username = context.env.MOENGAGE_USERNAME;
     const password = context.env.MOENGAGE_PASSWORD;
-    // const appId = 'J66N00EIXFL3G0NFKB306NIH';
-    // const username = 'J66N00EIXFL3G0NFKB306NIH';
-    // const password = 'nRQd0SxyhFnYlU5gdKOvC1M5';
+    const turnstileSecret = context.env.TURNSTILE_SECRET;
   
     // Ensure these values are present
-    if (!username || !password || !appId) {
+    if (!username || !password || !appId || !turnstileSecret) {
+        console.log('Missing credentials');
         return new Response("Missing credentials", { status: 400 });
     }
   
     // Parse the incoming request (form data)
     const requestBody = await context.request.json();
     const { first_name, last_name, email, country, answer } = requestBody.attributes;
+    const turnstileToken = requestBody["cf-turnstile-response"];
 
     // Ensure form data is valid
-    if (!first_name || !last_name || !email || !country || !answer) {
+    if (!first_name || !last_name || !email || !country || !answer || !turnstileToken) {
+        console.log('Missing field');
         return new Response("Missing required form fields", { status: 400 });
     }
-  
+
+    // Turnstile verification
+    const verifyResponse = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: new URLSearchParams({
+            secret: turnstileSecret,
+            response: turnstileToken,
+            remoteip: context.request.headers.get("CF-Connecting-IP") || ""
+        })
+    });
+
+    const verification = await verifyResponse.json();
+
+    if (!verification.success) {
+        console.log('Turnstile verification failed');
+        return new Response("Turnstile verification failed", { status: 403 });
+    }
+
+    console.log('Turnstile verification succeeded');
+
     // Prepare Base64 credentials for Basic Authentication
     const base64Credentials = btoa(`${username}:${password}`);
   

@@ -6,6 +6,7 @@
         <title>Easter Campaign - Big Bus Tours</title>
         <script src="https://cdn.tailwindcss.com"></script>
         <script src="https://unpkg.com/alpinejs" defer></script>
+        <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
         <style>
             @font-face {
                 font-family: 'DIN Round Pro';
@@ -267,6 +268,8 @@
                                     <span class="ml-2 text-white text-sm">I agree to the <a href="https://www.bigbustours.com/competition-terms-and-conditions" class="text-[#FFDD00]">terms and conditions</a></span>
                                 </label>
                             </div>
+
+                            <div class="cf-turnstile" data-theme="light" data-sitekey="0x4AAAAAABIHABNwwa1lq1dt"></div>
 
                             <div class="flex items-center justify-end">
                                 <button type="submit" class="bg-white text-[#AA0A2F] font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline hover:bg-[#FFDD00] transition">
