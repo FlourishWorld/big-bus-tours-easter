@@ -13,7 +13,7 @@
                     token: ''
                 });
             });
-        
+
             function javascriptCallback(token) {
                 console.log('Turnstile Callback Token:', token);
                 Alpine.store('turnstile').token = token;
@@ -145,6 +145,8 @@
                         isFormSubmitted: false,
 
                         submitForm() {
+                            console.log('Token before submit:', this.formData.turnstileToken);
+
                             if (!this.formData.terms) {
                                 alert('Please accept the terms and conditions.');
                                 return;
