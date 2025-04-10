@@ -17,16 +17,16 @@ export async function onRequest(context) {
 
     const body = await context.request.formData();
 
-    const first_name = body.get('first_name');
-    const last_name = body.get('attributes[last_name]');
-    const email = body.get('email');
-    const country = body.get('country');
-    const answer = body.get('answer');
+    // const first_name = body.get('first_name');
+    // const last_name = body.get('attributes[last_name]');
+    // const email = body.get('email');
+    // const country = body.get('country');
+    // const answer = body.get('answer');
     const token = body.get("cf-turnstile-response");
 
     console.log(token);
-    console.log(first_name);
-    console.log(last_name);
+    // console.log(first_name);
+    // console.log(last_name);
 
     // Ensure form data is valid
     if (!first_name || !last_name || !email || !country || !answer || !turnstileToken) {
