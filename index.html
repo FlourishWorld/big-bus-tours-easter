@@ -131,10 +131,8 @@
                         answers: ['8 Eggs', '9 Eggs', '10 Eggs', '11 Eggs', '12 Eggs', '13 Eggs', '14 Eggs'],
                         isFormSubmitted: false,
 
-                        console.log('HERE'),
-
                         javascriptCallback(token) {
-                            console.log('HEREEE'),
+                            console.log('HEREEE');
                             this.formData.turnstileToken = token;
                             console.log('Turnstile Callback Token:', token);
                         },
