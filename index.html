@@ -7,6 +7,19 @@
         <script src="https://cdn.tailwindcss.com"></script>
         <script src="https://unpkg.com/alpinejs" defer></script>
         <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+        <script>
+            function javascriptCallback(token) {
+                console.log('HEREEE');
+                console.log('Turnstile Callback Token:', token);
+                const formContainer = document.getElementById('giveawayForm');
+                if (formContainer && formContainer.__x) {
+                    formContainer.__x.formData.cf_turnstile_response = token;
+                    console.log('Updated formData.turnstileToken:', formContainer.__x.formData.turnstileToken);
+                } else {
+                    console.error('Alpine.js x-data container with id "giveawayForm" not found or not initialized.');
+                }
+            }
+        </script>
         <style>
             @font-face {
                 font-family: 'DIN Round Pro';
@@ -113,6 +126,7 @@
         >
             <div class="w-full max-w-2xl flex justify-center">
                 <div
+                    id="giveawayForm"
                     :class="{
                         'bg-[#AA0A2F] rounded shadow-md w-full relative': true,
                         'max-w-md p-8': !isFormSubmitted, 
@@ -130,12 +144,6 @@
                         },
                         answers: ['8 Eggs', '9 Eggs', '10 Eggs', '11 Eggs', '12 Eggs', '13 Eggs', '14 Eggs'],
                         isFormSubmitted: false,
-
-                        javascriptCallback(token) {
-                            console.log('HEREEE');
-                            this.formData.turnstileToken = token;
-                            console.log('Turnstile Callback Token:', token);
-                        },
 
                         submitForm() {
                             if (!this.formData.terms) {
