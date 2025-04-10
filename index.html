@@ -262,7 +262,7 @@
                                 class="cf-turnstile"
                                 data-theme="light"
                                 data-sitekey="0x4AAAAAABIHABNwwa1lq1dt"
-                                @cf-turnstile-response.document="console.log('Turnstile Response Event:', $event.detail); formData['cf-turnstile-response'] = $event.detail"
+                                @cf-turnstile-response="console.log('Turnstile Response Event on div:', $event.detail); formData['cf-turnstile-response'] = $event.detail"
                             ></div>
 
                             <div class="flex items-center justify-end">
