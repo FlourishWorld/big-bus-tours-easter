@@ -51,7 +51,7 @@ export async function onRequest(context) {
         // Check if the response is successful
         if (!response.ok) {
             const errorMessage = await response.text();
-            return new Response(`Erroooor: ${errorMessage}`, { status: response.status });
+            return new Response(`Error: ${errorMessage}`, { status: response.status });
         }
   
         // If successful, return a success message
@@ -59,6 +59,6 @@ export async function onRequest(context) {
   
     } catch (error) {
         console.error("Error during MoEngage API request:", error);
-        return new Response("Error submitttttttttting form.", { status: 500 });
+        return new Response("Error submitting form.", { status: 500 });
     }
 }

@@ -26,8 +26,20 @@
             body {
                 font-family: 'DIN Round Pro', Arial, sans-serif;
             }
+
+            [x-cloak] {
+                display: none;
+            }
         </style>
     </head>
+
+    <!--
+        TODO:
+        Check MoEngage for incoming data
+        Use Cloudflare Turnstile to combat spam
+        Add new hostname to Turnstile once created by BIGBUS
+    -->
+
     <body class="bg-[#AA0A2F] flex flex-col items-center justify-center text-white py-[32px]" x-data="{ open: false }">
         <h1 class="text-center text-[24px] md:text-[48px] leading-[1.2] font-bold py-[20px] w-full max-w-[84%]">
             Find all the Easter Eggs for a chance to win Big Bus Tour tickets!
@@ -98,7 +110,7 @@
             class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-60 z-50 p-[16px] md:p-[40px]"
             x-cloak
         >
-            <div class="w-full max-w-2xl flex justify-center" x-cloak>
+            <div class="w-full max-w-2xl flex justify-center">
                 <div
                     :class="{
                         'bg-[#AA0A2F] rounded shadow-md w-full relative': true,
@@ -163,8 +175,8 @@
                                 };
                             })
                             .catch((error) => {
-                                alert('Error submitting foooooorm.');
-                                console.error('Errrrrrrrrrrrrrrror:', error);
+                                alert('Error submitting form.');
+                                console.error('Error:', error);
                             });
                         }
                     }"
@@ -255,7 +267,7 @@
                                     <span class="ml-2 text-white text-sm">I agree to the <a href="https://www.bigbustours.com/competition-terms-and-conditions" class="text-[#FFDD00]">terms and conditions</a></span>
                                 </label>
                             </div>
-                
+
                             <div class="flex items-center justify-end">
                                 <button type="submit" class="bg-white text-[#AA0A2F] font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline hover:bg-[#FFDD00] transition">
                                     Submit
