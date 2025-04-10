@@ -131,6 +131,11 @@
                         answers: ['8 Eggs', '9 Eggs', '10 Eggs', '11 Eggs', '12 Eggs', '13 Eggs', '14 Eggs'],
                         isFormSubmitted: false,
 
+                        javascriptCallback(token) {
+                            this.formData['cf-turnstile-response'] = token;
+                            console.log('Turnstile Callback Token:', token);
+                        }
+
                         submitForm() {
                             if (!this.formData.terms) {
                                 alert('Please accept the terms and conditions.');

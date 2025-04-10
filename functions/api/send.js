@@ -3,10 +3,6 @@ export async function onRequest(context) {
     const username = context.env.MOENGAGE_USERNAME;
     const password = context.env.MOENGAGE_PASSWORD;
     const turnstileSecret = context.env.TURNSTILE_SECRET;
-  
-
-    const body = await context.request.json();
-    console.log(body);
 
     // Ensure these values are present
     if (!username || !password || !appId || !turnstileSecret) {
@@ -14,12 +10,13 @@ export async function onRequest(context) {
     }
   
     // Parse the incoming request (form data)
-    // const requestBody = await context.request.json();
-    // const { first_name, last_name, email, country, answer, terms, turnstileToken } = requestBody;
+    const requestBody = await context.request.json();
+    const { first_name, last_name, email, country, answer, terms, turnstileToken } = requestBody;
 
-    // console.log(requestBody);
-    // console.log(first_name);
-    // console.log(turnstileToken);
+    console.log(requestBody);
+    console.log(first_name);
+    console.log(turnstileToken);
+
 
     // Ensure form data is valid
     if (!first_name || !last_name || !email || !country || !answer || !turnstileToken) {
