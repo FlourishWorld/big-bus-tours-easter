@@ -9,15 +9,16 @@
         <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
         <script>
             function javascriptCallback(token) {
-                console.log('HEREEE');
                 console.log('Turnstile Callback Token:', token);
-                const formContainer = document.getElementById('giveawayForm');
-                if (formContainer && formContainer.__x) {
-                    formContainer.__x.formData.cf_turnstile_response = token;
-                    console.log('Updated formData.turnstileToken:', formContainer.__x.formData.turnstileToken);
-                } else {
-                    console.error('Alpine.js x-data container with id "giveawayForm" not found or not initialized.');
-                }
+                document.addEventListener('alpine:init', () => {
+                    const formContainer = document.getElementById('giveawayForm');
+                    if (formContainer && formContainer.__x) {
+                        formContainer.__x.formData.turnstileToken = token;
+                        console.log('Updated formData.turnstileToken:', formContainer.__x.formData.turnstileToken);
+                    } else {
+                        console.error('Alpine.js x-data container with id "giveawayForm" not found or not initialized (inside alpine:init).');
+                    }
+                });
             }
         </script>
         <style>
