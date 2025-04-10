@@ -10,15 +10,25 @@
         <script>
             function javascriptCallback(token) {
                 console.log('Turnstile Callback Token:', token);
-                document.addEventListener('alpine:init', () => {
-                    const formContainer = document.getElementById('giveawayForm');
+        
+                const formContainer = document.getElementById('giveawayForm');
+        
+                const updateFormData = () => {
                     if (formContainer && formContainer.__x) {
                         formContainer.__x.formData.turnstileToken = token;
                         console.log('Updated formData.turnstileToken:', formContainer.__x.formData.turnstileToken);
                     } else {
-                        console.error('Alpine.js x-data container with id "giveawayForm" not found or not initialized (inside alpine:init).');
+                        console.error('Alpine.js x-data container with id "giveawayForm" not found or not initialized (inside updateFormData).');
                     }
-                });
+                };
+        
+                if (window.Alpine && window.Alpine.initialized) {
+                    // Alpine is already initialized, execute immediately
+                    updateFormData();
+                } else {
+                    // Alpine is not yet initialized, listen for the event
+                    document.addEventListener('alpine:init', updateFormData);
+                }
             }
         </script>
         <style>
