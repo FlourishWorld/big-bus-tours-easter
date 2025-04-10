@@ -9,14 +9,14 @@ export async function onRequest(context) {
         return new Response("Missing credentials", { status: 400 });
     }
   
+    console.log(context.request);
     // Parse the incoming request (form data)
     const requestBody = await context.request.json();
-    const { first_name, last_name, email, country, answer, terms, token } = requestBody;
-    const turnstileToken = requestBody['cf-turnstile-response'];
+    const { first_name, last_name, email, country, answer, terms, turnstileToken } = requestBody;
 
     console.log(requestBody);
     console.log(first_name);
-    console.log(token);
+    console.log(turnstileToken);
 
     // Ensure form data is valid
     if (!first_name || !last_name || !email || !country || !answer || !turnstileToken) {

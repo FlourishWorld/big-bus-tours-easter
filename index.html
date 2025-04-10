@@ -7,21 +7,6 @@
         <script src="https://cdn.tailwindcss.com"></script>
         <script src="https://unpkg.com/alpinejs" defer></script>
         <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                const turnstileElement = document.querySelector('.cf-turnstile');
-            
-                if (turnstileElement) {
-                    turnstileElement.addEventListener('cf-turnstile-response', function(event) {
-                        console.log('Standard JS Turnstile Response Event:', event.detail);
-                        // If this logs, then the event is being dispatched.
-                        // We can then focus on why Alpine isn't catching it.
-                    });
-                } else {
-                    console.error('Turnstile element not found!');
-                }
-            });
-        </script>
         <style>
             @font-face {
                 font-family: 'DIN Round Pro';
@@ -277,7 +262,6 @@
                                 class="cf-turnstile"
                                 data-theme="light"
                                 data-sitekey="0x4AAAAAABIHABNwwa1lq1dt"
-                                x-ref="turnstileWidget"
                             ></div>
 
                             <div class="flex items-center justify-end">
