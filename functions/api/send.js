@@ -39,11 +39,8 @@ export async function onRequest(context) {
     const verification = await verifyResponse.json();
 
     if (!verification.success) {
-        console.log('Turnstile verification failed');
         return new Response("Turnstile verification failed", { status: 403 });
     }
-
-    console.log('Turnstile verification succeeded');
 
     // Prepare Base64 credentials for Basic Authentication
     const base64Credentials = btoa(`${username}:${password}`);
@@ -83,7 +80,6 @@ export async function onRequest(context) {
         return new Response("Form data successfully sent to MoEngage!", { status: 200 });
   
     } catch (error) {
-        console.error("Error during MoEngage API request:", error);
         return new Response("Error submitting form.", { status: 500 });
     }
 }

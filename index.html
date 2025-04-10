@@ -16,7 +16,6 @@
             });
 
             function javascriptCallback(token) {
-                console.log('Turnstile Callback Token:', token);
                 Alpine.store('turnstile').token = token;
             }
         </script>
@@ -50,7 +49,6 @@
     <!--
         TODO:
         Check MoEngage for incoming data
-        Use Cloudflare Turnstile to combat spam
         Add new hostname to Turnstile once created by BIGBUS
     -->
 
@@ -110,8 +108,6 @@
 
                         submitForm() {
                             this.formData.turnstileToken = Alpine.store('turnstile').token;
-                            
-                            console.log('Token before submit:', this.formData.turnstileToken);
 
                             if (!this.formData.terms) {
                                 alert('Please accept the terms and conditions.');
@@ -161,8 +157,6 @@
                     >
                         &times;
                     </button>
-
-                    <div x-text="$store.turnstile.token"></div>
 
                     <div x-show="!isFormSubmitted" x-cloak>
                         <form @submit.prevent="submitForm">
