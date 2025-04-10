@@ -5,9 +5,8 @@ export async function onRequest(context) {
     const turnstileSecret = context.env.TURNSTILE_SECRET;
   
 
-    const body = await context.request.formData();
-    const turnstileToken = body.get("cf-turnstile-response");
-    console.log(turnstileToken);
+    const body = await context.request.json();
+    console.log(body);
 
     // Ensure these values are present
     if (!username || !password || !appId || !turnstileSecret) {
