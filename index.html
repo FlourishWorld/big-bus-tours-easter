@@ -125,7 +125,8 @@
                             email: '',
                             country: '',
                             answer: '',
-                            terms: false
+                            terms: false,
+                            'cf-turnstile-response': ''
                         },
                         answers: ['8 Eggs', '9 Eggs', '10 Eggs', '11 Eggs', '12 Eggs', '13 Eggs', '14 Eggs'],
                         isFormSubmitted: false,
@@ -136,25 +137,12 @@
                                 return;
                             }
 
-                            const userData = {
-                                type: 'customer',
-                                customer_id: this.formData.email,
-                                update_existing_only: 'false',
-                                attributes: {
-                                    first_name: this.formData.first_name,
-                                    last_name: this.formData.last_name,
-                                    email: this.formData.email,
-                                    country: this.formData.country,
-                                    answer: this.formData.answer
-                                }
-                            };
-
                             fetch('/api/send', {
                                 method: 'POST',
                                 headers: {
                                     'Content-Type': 'application/json'
                                 },
-                                body: JSON.stringify(userData)
+                                body: JSON.stringify(formData)
                             })
                             .then(response => {
                             if (!response.ok) {
@@ -172,7 +160,8 @@
                                     email: '',
                                     country: '',
                                     answer: '',
-                                    terms: false
+                                    terms: false,
+                                    'cf-turnstile-response': ''
                                 };
                             })
                             .catch((error) => {
@@ -273,6 +262,7 @@
                                 class="cf-turnstile"
                                 data-theme="light"
                                 data-sitekey="0x4AAAAAABIHABNwwa1lq1dt"
+                                @cf-turnstile-response.window="formData['cf-turnstile-response'] = $event.detail"
                             ></div>
 
                             <div class="flex items-center justify-end">
