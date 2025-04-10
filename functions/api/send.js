@@ -12,6 +12,7 @@ export async function onRequest(context) {
   
     // Parse the incoming request (form data)
     const requestBody = await context.request.json();
+    console.log(requestBody);
     const { first_name, last_name, email, country, answer } = requestBody.attributes;
     const turnstileToken = requestBody.get("cf-turnstile-response");
 
