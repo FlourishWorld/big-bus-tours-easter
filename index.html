@@ -160,6 +160,8 @@
                         &times;
                     </button>
 
+                    <div x-text="$store.turnstile.token"></div>
+
                     <div x-show="!isFormSubmitted" x-cloak>
                         <form @submit.prevent="submitForm">
                             <div class="mb-4">
