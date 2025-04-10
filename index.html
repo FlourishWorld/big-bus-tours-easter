@@ -12,25 +12,15 @@
                 console.log('Turnstile Callback Token:', token);
         
                 const formContainer = document.getElementById('giveawayForm');
-        
-                const updateFormData = () => {
-                    if (formContainer && formContainer.__x) {
-                        formContainer.__x.formData.turnstileToken = token;
-                        console.log('Updated formData.turnstileToken:', formContainer.__x.formData.turnstileToken);
-                    } else {
-                        console.error('Alpine.js x-data container with id "giveawayForm" not found or not initialized (inside updateFormData).');
-                    }
-                };
-        
-                if (window.Alpine && window.Alpine.initialized) {
-                    console.log('ALPINE IS ALREADY INITIALISED');
-                    // Alpine is already initialized, execute immediately
-                    updateFormData();
+
+                if (formContainer && formContainer.__x) {
+                    formContainer.__x.formData.turnstileToken = token;
+                    console.log('Updated formData.turnstileToken:', formContainer.__x.formData.turnstileToken);
                 } else {
-                    console.log('LISTENING FOR ALPINE INIT');
-                    // Alpine is not yet initialized, listen for the event
-                    document.addEventListener('alpine:init', updateFormData);
+                    console.error('Alpine.js x-data container with id "giveawayForm" not found or not initialized (inside updateFormData).');
                 }
+
+
             }
         </script>
         <style>
