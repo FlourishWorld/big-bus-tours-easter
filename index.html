@@ -129,20 +129,10 @@
                         },
                         answers: ['8 Eggs', '9 Eggs', '10 Eggs', '11 Eggs', '12 Eggs', '13 Eggs', '14 Eggs'],
                         isFormSubmitted: false,
-                        turnstileToken: '',
-
-                        onTurnstileSuccess(token) {
-                            this.turnstileToken = token;
-                        },
 
                         submitForm() {
                             if (!this.formData.terms) {
                                 alert('Please accept the terms and conditions.');
-                                return;
-                            }
-
-                            if (!this.turnstileToken) {
-                                alert('Security check error.');
                                 return;
                             }
 
@@ -156,11 +146,8 @@
                                     email: this.formData.email,
                                     country: this.formData.country,
                                     answer: this.formData.answer
-                                },
-                                'cf-turnstile-response': this.turnstileToken
+                                }
                             };
-
-                            console.log(userData);
 
                             fetch('/api/send', {
                                 method: 'POST',
@@ -283,11 +270,9 @@
                             </div>
 
                             <div
-                                x-ref="turnstile"
                                 class="cf-turnstile"
                                 data-theme="light"
                                 data-sitekey="0x4AAAAAABIHABNwwa1lq1dt"
-                                data-callback="onTurnstileSuccess"
                             ></div>
 
                             <div class="flex items-center justify-end">
