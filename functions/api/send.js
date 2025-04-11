@@ -14,7 +14,7 @@ export async function onRequest(context) {
     const { first_name, last_name, email, country, answer, terms, marketing_opt_in, turnstileToken } = requestBody;
 
     // Ensure form data is valid
-    if (!first_name || !last_name || !email || !country || !answer || !marketing_opt_in || !turnstileToken) {
+    if (!first_name || !last_name || !email || !country || !answer || !turnstileToken) {
         return new Response("Missing required form fields", { status: 400 });
     }
 
