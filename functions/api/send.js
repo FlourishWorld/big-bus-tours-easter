@@ -55,7 +55,7 @@ export async function onRequest(context) {
         }
     };
 
-    console.log(JSON.stringify(userData));
+    console.log(userData);
 
     try {
         // Make the API request to MoEngage
