@@ -11,10 +11,10 @@ export async function onRequest(context) {
   
     // Parse the incoming request (form data)
     const requestBody = await context.request.json();
-    const { first_name, last_name, email, country, answer, terms, turnstileToken } = requestBody;
+    const { first_name, last_name, email, country, answer, terms, marketing_opt_in, turnstileToken } = requestBody;
 
     // Ensure form data is valid
-    if (!first_name || !last_name || !email || !country || !answer || !turnstileToken) {
+    if (!first_name || !last_name || !email || !country || !answer || !marketing_opt_in || !turnstileToken) {
         return new Response("Missing required form fields", { status: 400 });
     }
 
@@ -50,10 +50,13 @@ export async function onRequest(context) {
             last_name,
             email,
             country,
-            answer
+            answer,
+            marketing_opt_in
         }
     };
-  
+
+    console.log(JSON.stringify(userData));
+
     try {
         // Make the API request to MoEngage
         const response = await fetch(`https://api-02.moengage.com/v1/customer?app_id=${appId}`, {

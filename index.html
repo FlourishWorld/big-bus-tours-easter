@@ -99,6 +99,7 @@
                             country: '',
                             answer: '',
                             terms: false,
+                            marketing_opt_in: false,
                             turnstileToken: ''
                         },
                         answers: ['8 Eggs', '9 Eggs', '10 Eggs', '11 Eggs', '12 Eggs', '13 Eggs', '14 Eggs'],
@@ -136,7 +137,8 @@
                                     country: '',
                                     answer: '',
                                     terms: false,
-                                    'cf-turnstile-response': ''
+                                    marketing_opt_in: false,
+                                    turnstileToken: ''
                                 };
                             })
                             .catch((error) => {
@@ -230,6 +232,13 @@
                                 <label class="inline-flex items-center">
                                     <input type="checkbox" x-model="formData.terms" class="form-checkbox h-5 w-5 text-[#FFDD00]">
                                     <span class="ml-2 text-white text-sm">I agree to the <a href="https://www.bigbustours.com/competition-terms-and-conditions" class="text-[#FFDD00]" target="_blank">terms and conditions</a></span>
+                                </label>
+                            </div>
+
+                            <div class="mb-4">
+                                <label class="inline-flex items-center">
+                                    <input type="checkbox" x-model="formData.marketing_opt_in" class="form-checkbox h-5 w-5 text-[#FFDD00]">
+                                    <span class="ml-2 text-white text-sm">I want to receive the latest news and discounts from Big Bus Tours</span>
                                 </label>
                             </div>
 
