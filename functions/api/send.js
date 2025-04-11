@@ -13,11 +13,6 @@ export async function onRequest(context) {
     const requestBody = await context.request.json();
     const { first_name, last_name, email, country, answer, terms, turnstileToken } = requestBody;
 
-    console.log(requestBody);
-    console.log(first_name);
-    console.log(turnstileToken);
-
-
     // Ensure form data is valid
     if (!first_name || !last_name || !email || !country || !answer || !turnstileToken) {
         return new Response("Missing required form fields", { status: 400 });
